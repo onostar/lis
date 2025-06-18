@@ -21,12 +21,12 @@
     <table id="data_table" class="searchTable">
         <thead>
         <tr style="background:var(--primaryColor)">
-                <td>S/N</td>
-                <td>Customer</td>
+               <td>S/N</td>
+                <td>Patient</td>
                 <td>Invoice</td>
                 <td>Amount</td>
                 <td>Payment Mode</td>
-                <td>Date</td>
+                <td>Post Date</td>
                 <td>Post Time</td>
                 <td>Posted by</td>
                 
@@ -44,25 +44,30 @@
                     <?php
                         //get customer
                         $get_customer = new selects();
-                        $client = $get_customer->fetch_details_group('customers', 'customer', 'customer_id', $detail->customer);
-                        echo $client->customer;
+                        $clients = $get_customer->fetch_details_cond('patients', 'patient_id', $detail->customer);
+                        foreach($clients as $client){
+                            echo $client->last_name." ".$client->other_names;
+                        }
                     ?>
                 </td>
-                <td><a style="color:green" href="javascript:void(0)" title="View invoice details"><?php echo $detail->invoice?></a></td>
+                <td><a style="color:green" href="javascript:void(0)" title="View invoice details" onclick="showPage('debt_invoice_details.php?invoice=<?php echo $detail->invoice?>')"><?php echo $detail->invoice?></a></td>
                 <td>
                     <?php echo "₦".number_format($detail->amount, 2);?>
                 </td>
                 <td>
                     <?php echo $detail->payment_mode?>
                 </td>
-                <td style="color:var(--otherColor)"><?php echo date("d-m-y", strtotime($detail->post_date));?></td>
+                <td style="color:var(--moreColor)"><?php echo date("d-m-Y", strtotime($detail->post_date));?></td>
                 <td style="color:var(--moreColor)"><?php echo date("H:i:sa", strtotime($detail->post_date));?></td>
                 <td>
                     <?php
                         //get posted by
                         $get_posted_by = new selects();
-                        $checkedin_by = $get_posted_by->fetch_details_group('users', 'full_name', 'user_id', $detail->posted_by);
-                        echo $checkedin_by->full_name;
+                        $checks = $get_posted_by->fetch_details_cond('staffs',  'user_id', $detail->posted_by);
+                        foreach($checks as $check){
+                            $full_name = $check->last_name." ".$check->other_names;
+                        }
+                        echo $full_name;
                     ?>
                 </td>
                 

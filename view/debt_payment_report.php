@@ -26,7 +26,7 @@
     <hr>
     <div class="search">
         <input type="search" id="searchCheckout" placeholder="Enter keyword" onkeyup="searchData(this.value)">
-        <a class="download_excel" href="javascript:void(0)" onclick="convertToExcel('data_table', 'Sales report')"title="Download to excel"><i class="fas fa-file-excel"></i></a>
+        <a class="download_excel" href="javascript:void(0)" onclick="convertToExcel('data_table', 'Debt payment report')"title="Download to excel"><i class="fas fa-file-excel"></i></a>
     </div>
     <table id="data_table" class="searchTable">
         <thead>
@@ -61,7 +61,7 @@
                         }
                     ?>
                 </td>
-                <td><a style="color:green" href="javascript:void(0)" title="View invoice details"><?php echo $detail->invoice?></a></td>
+                <td><a style="color:green" href="javascript:void(0)" title="View invoice details" onclick="showPage('debt_invoice_details.php?invoice=<?php echo $detail->invoice?>')"><?php echo $detail->invoice?></a></td>
                 <td>
                     <?php echo "₦".number_format($detail->amount, 2);?>
                 </td>
